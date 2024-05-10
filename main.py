@@ -34,18 +34,18 @@ class Student:
                 f'Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n'
                 f'Завершённые курсы: {', '.join(self.finished_courses)}')
 
-    # функция, с помощью которой можно сравнить среднюю оценку выбранного студента с оценками другого студента:
+    # магические функции сравнения по оценкам за задания:
+    def __gt__(self, other):
+        return self.avergrades() > other.avergrades()
 
-    def comparison(self, student):
-        if isinstance(student, Student):
-            if self.avergrades() > student.avergrades():
-                return 'Оценки первого студента выше'
-            elif self.avergrades() == student.avergrades():
-                return 'Оценки студентов одинаковы'
-            else:
-                return 'Оценки первого студента ниже'
-        else:
-            return 'Ошибка'
+    def __lt__(self, other):
+        return self.avergrades() < other.avergrades()
+
+    def __eq__(self, other):
+        return self.avergrades() == other.avergrades()
+
+    def __ne__(self, other):
+        return self.avergrades() != other.avergrades()
 
 
 class Mentor:
@@ -69,18 +69,19 @@ class Lecturer(Mentor):
                 f'Фамилия: {self.surname}\n'
                 f'Средняя оценка за лекции: {self.avergrades()}')
 
-    # функция, с помощью которой можно сравнить среднюю оценку этого лектора с оценками другого лектора:
+    # магические функции сравнения по оценкам за лекции:
 
-    def comparison(self, lecturer):
-        if isinstance(lecturer, Lecturer):
-            if self.avergrades() > lecturer.avergrades():
-                return 'Оценки первого лектора выше'
-            elif self.avergrades() == lecturer.avergrades():
-                return 'Оценки лекторов одинаковы'
-            else:
-                return 'Оценки первого лектора ниже'
-        else:
-            return 'Ошибка'
+    def __gt__(self, other):
+        return self.avergrades() > other.avergrades()
+
+    def __lt__(self, other):
+        return self.avergrades() < other.avergrades()
+
+    def __eq__(self, other):
+        return self.avergrades() == other.avergrades()
+
+    def __ne__(self, other):
+        return self.avergrades() != other.avergrades()
 
 
 class Reviewer(Mentor):
@@ -165,8 +166,8 @@ print(student1)
 
 # сравнение оценок студентов и лекторов:
 
-print(student1.comparison(student2))
-print(lecturer1.comparison(lecturer2))
+print(student1 == student2)
+print(lecturer1 > lecturer2)
 
 
 # подсчет средней оценки всех студентов за один курс:
